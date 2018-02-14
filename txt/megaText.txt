@@ -1,0 +1,5 @@
+While import is indeed part of ES6, it is unfortunately not yet supported in NodeJS by default, and has only very recently landed support in browsers.
+
+See browser compat table on MDN and this Node issue.
+
+From James M Snell's Update on ES6 Modules in Node.js (February 2017):

@@ -1,0 +1,4 @@
+{
+	"help": "__read txt/help.txt",
+	"complexCommand": "__execute commands/complexFunc.js"
+}

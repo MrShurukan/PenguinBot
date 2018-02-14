@@ -1,0 +1,11 @@
+```
+Che, pachani, hotite pomosch ot Pengwina?
+
+Paluchaite:
+
+Normal commands:
+	!help -> Ti tupoi ili da?
+
+Audioplayer commads:
+	!play *name* -> KAKOGO DIAVOLA TI ZDES SHUMISHH
+```
