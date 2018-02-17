@@ -1,51 +1,56 @@
-/*import Discord from "discord.js"
-import fs from "fs"*/
-function requireUncached(module){
-    delete require.cache[require.resolve(module)]
-    return require(module)
-}
+const V = "1.0.0";
 
 const Discord = require("discord.js");
 const fs = require("fs");
 const client = new Discord.Client();
 
+//Load translation file
+const translation = require('./translations.json');
+
 client.on('ready', () => {
-	console.log(`Залогинен как ${client.user.tag}!`);
+	console.log(`Залогинен как ${client.user.tag}!\nВерсия ${V}`);
 });
 
 const prefix = "!";
 const kernelPrefix = "__";
 client.on('message', msg => {
-	if (msg.author.bot) return;		//Если это бот (в том числе и мы), то сообщение нужно проигнорировать
+	// We need to ignore a message, if it's coming from a bot
+	if (msg.author.bot) return;
 	let content = msg.content;
-	
-	if (content.startsWith(prefix)) {	//Это команда нам
-		let command = content.replace(prefix, "");
+
+	// Command to us
+	if (content.startsWith(prefix)) {
+		let command = content.replace(prefix, "").split(" ");
 		getAsyncContent("json/commands.json").then(commands => {
 			commands = JSON.parse(commands);
-			if (commands[command] === undefined)
-				msg.reply(`Poyasni za bazar, ${prefix}${command} ne sushestvuet`);
+			if (commands[command[0]] === undefined)
+				//msg.reply(`Poyasni za bazar, ${prefix}${command[0]} ne sushestvuet`);
+				msg.reply(insTr(translation.noSuchCommand, 'COMMAND', `${prefix}${command[0]}`));
 			else {
-				command = commands[command];
-				if (command.startsWith(kernelPrefix)) {			//В JSON может быть указание на то, что необходимо что-то сделать
+				let args = command.slice(1);
+				command = commands[command[0]];
+				// JSON might have a special command for us
+				if (command.startsWith(kernelPrefix)) {
 					command = command.replace(kernelPrefix, "").split(" ");
 					switch (command[0]) {
 						case "read":
 							getAsyncContent(command[1])
-							.then(cont => msg.reply(cont))
-							.catch(err => console.warn(`Problem while reading command:\n${err}\n`));
+							.then(cont => msg.reply(cont));
+							//.catch(err => console.warn(`Problem while reading command:\n${err}\n`));
 							break;
 						case "execute":
-							requireUncached(`./${command[1]}`)(msg);
+							requireUncached(`./${command[1]}`)(msg, [args]);
 							break;
 					}
 				}
 				else msg.reply(command);
 			}
-		}).catch(err => 
-			console.warn(`Hey, that is indeed a problem:\n${err}\n\nYo, be careful next time`));
-		
-		
+		}).catch(err => {
+      console.warn("Возникла ошибка:\n", err, "\n");
+      msg.reply(translation.errorOccurred + "\n```" + err + "```\n", translation.errorEmbed);
+    });
+
+
 	}
 });
 
@@ -54,10 +59,10 @@ client.on('guildMemberAdd', member => {
 	const channel = member.guild.channels.find('name', 'member-log');
 	// Do nothing if the channel wasn't found on this server
 	if (!channel) return;
-	channel.send(`Nu che, ${member}, bratuha, dobro pojalovat`);
+	channel.send(insTr(translation.newMemberJoined, "NAME", member));
 });
 
-client.login(fs.readFileSync("TOKEN.TXT", "utf8"));
+client.login(fs.readFileSync("TOKEN.TXT", "utf8").trim());
 
 //Helper functions
 function getAsyncContent(path) {
@@ -67,4 +72,14 @@ function getAsyncContent(path) {
 			resolve(data);
 		});
 	});
+}
+
+function requireUncached(module) {
+    delete require.cache[require.resolve(module)]
+    return require(module)
+}
+
+//insertTranslation
+function insTr(translation, title, content) {
+	return translation.replace(new RegExp(`{${title}}`, "g"), content)
 }

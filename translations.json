@@ -1,0 +1,18 @@
+{
+  "noSuchCommand": "Эйоу, команды {COMMAND} нет, поясни за базар",
+  "errorOccurred": "Возникла ошибка: ",
+  "errorEmbed":
+    {
+      "embed":
+      {
+        "title": "Ecyc",
+        "description": "есус ты там? Пофикси ошипки в коде есус!\n\nшто значит тибя Илья зовут?",
+        "image": {
+          "url": "https://media.discordapp.net/attachments/413046739369721857/414387099605663744/3d-penguin-climbs-the-ladder-picture-id503407453.png?width=468&height=468"
+        }
+      }
+  },
+  "newMemberJoined": "Ну чё, {NAME}, братуха, добро пожаловать!\nЯ - Великий Пингвин, управляю районом тут, пиши !help если чё",
+  "gotResults": "Результаты получены, начинаю их вывод. (Внимание, Дискорд не любит много сообщений за раз, так что часть может задержаться)",
+  "startingSearch": "Начинаю поиск..."
+}
