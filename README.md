@@ -12,6 +12,8 @@ youtube-dl allows you to easily grab streams of video or sound of youtube videos
 
 You also need to create two files in root folder: **TOKEN.TXT** and **GKEY.TXT**. You need to put your Discord Bot token into **TOKEN.TXT** and your Google Key to **GKEY.TXT** respectively
 
+In the root there is a **LANG.TXT** file. Inside you can set your language, just put all-capitals *RUSSIAN* or *ENGLISH*
+
 ## Contributing
 
 If you want to, feel free to do so! In any ways
