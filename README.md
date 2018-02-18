@@ -10,12 +10,18 @@ If you want to use this bot, you'll have to install "youtube-dl" to your system
 
 youtube-dl allows you to easily grab streams of video or sound of youtube videos, which I'll be using here
 
+You also need to create two files in root folder: **TOKEN.TXT** and **GKEY.TXT**. You need to put your Discord Bot token into **TOKEN.TXT** and your Google Key to **GKEY.TXT** respectively
+
 ## Contributing
 
 If you want to, feel free to do so! In any ways
 
 * **Ilya Zavyalov** - *Initial work* - [MrShurukan](https://github.com/MrShurukan)
 
+
+
 ## Acknowledgments
 
 * Hat tip to anyone who's using this code
+* Do not forget about **TOKEN.TXT** and **GKEY.TXT**
+* youtube-dl is necessary
