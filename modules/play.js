@@ -1,9 +1,8 @@
 const search = require('youtube-search');
 const fs = require('fs');
 const exec = require('child-process-promise').exec;
-
-//Load translation file
-const translation = require('../translations.json');
+let lang;
+let translation;
 
 module.exports = (msg, args) => {
   // Voice only works in guilds
@@ -11,6 +10,16 @@ module.exports = (msg, args) => {
     msg.reply(translation.youMustBeInGroup);
     return;
   }
+
+  // Pick the language
+  if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
+  else lang = "ENGLISH";
+
+  // Load translation file
+  if (lang == "RUSSIAN") translation = requireUncached('../translationsRussian.json');
+  else translation = requireUncached('../translationsEnglish.json');
+
+
   //args = args[0];   //We don't need any additional args, so we just cut them (We need only words)
   let appArgs = args.slice(1);
   args = args[0];
@@ -74,7 +83,7 @@ function startVideo(link, msg, title, appArgs) {
               justAdded = true;
               setTimeout(() => {justAdded = false}, 5000);
               fs.writeFileSync('./json/PLAYLIST.JSON', JSON.stringify(queue), 'utf8');
-              if (appArgs[1] != "silent") msg.reply(`Подключен! Проигрываю: ${link}`);
+              if (appArgs[1] != "silent") msg.reply(insTr(translation.connectedPlaying, "LINK", link));
               try {
                 connection.playArbitraryInput(resultLink).on('end', () => {
                   // console.log("I ended");
@@ -103,4 +112,9 @@ function startVideo(link, msg, title, appArgs) {
 function requireUncached(module) {
     delete require.cache[require.resolve(module)]
     return require(module)
+}
+
+//insertTranslation
+function insTr(translation, title, content) {
+	return translation.replace(new RegExp(`{${title}}`, "g"), content)
 }

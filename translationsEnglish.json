@@ -1,0 +1,33 @@
+{
+  "noSuchCommand": "Yo, {COMMAND} is not a valid command!",
+  "errorOccurred": "Error occured: ",
+  "errorEmbed":
+    {
+      "embed":
+      {
+        "title": "Jesus",
+        "description": "jesus u there? fix errors in code jesus!\n\nwot do u mean ur name is Ilya?",
+        "image": {
+          "url": "https://media.discordapp.net/attachments/413046739369721857/414387099605663744/3d-penguin-climbs-the-ladder-picture-id503407453.png?width=468&height=468"
+        }
+      }
+  },
+  "newMemberJoined": "Well, well, {NAME}, welcome to the club, buddy. I am the Great Penguin, type !help if ya want",
+  "gotResults": "Got results, starting to output them. (Attention, Discord doesn't like a lot of messages at once, so some may come late)",
+  "startingSearch": "Starting search...",
+  "youMustBeInGroup": "You must be in a group and in a voice chat to play something",
+  "description": "Description:",
+  "quickAccess": "Quick Access",
+  "quickAccessN": "Use !play @{N} to quickly play this video",
+  "somethingWentWrong": "Something went wrong...",
+  "quickAccessDoesntExist": "Quick Access wasn't created yet; Use !search for that",
+  "queue": "Playlist",
+  "queueIsEmpty": "Queue is empty!",
+  "currentlyPlaying": "  **<-- Playing now**",
+  "playlistN": "```Use !playlist jump {N}```",
+  "noCurrentVideo": "No video is currently playing!",
+  "addedToQueue": "Added to queue!",
+  "queueWasCleared": "Queue is cleared!",
+  "wasDeletedFromQueue": "Deleted from queue!",
+  "connectedPlaying": "Conneted! Playing: {LINK}"
+}

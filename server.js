@@ -1,11 +1,11 @@
-const V = "1.1.0";
+const V = "1.1.1";
 
 const Discord = require("discord.js");
 const fs = require("fs");
 const client = new Discord.Client();
 
-// Load translation file
-const translation = require('./translations.json');
+let lang;
+let translation;
 
 client.on('ready', () => {
 	console.log(`Залогинен как ${client.user.tag}!\nВерсия ${V}`);
@@ -22,6 +22,14 @@ client.on('message', msg => {
 	// We need to ignore a message, if it's coming from a bot
 	if (msg.author.bot) return;
 	let content = msg.content;
+
+	// Pick the language
+	if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
+	else lang = "ENGLISH";
+
+	// Load translation file
+	if (lang == "RUSSIAN") translation = requireUncached('./translationsRussian.json');
+	else translation = requireUncached('./translationsEnglish.json');
 
 	// Command to us
 	if (content.startsWith(prefix)) {

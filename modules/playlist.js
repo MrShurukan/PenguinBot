@@ -1,8 +1,19 @@
 const fs = require('fs');
-const translation = require('../translations.json');
 const Discord = require('discord.js');
 const play = requireUncached("./play.js");
+
+let lang, translation;
+
 module.exports = (msg, args) => {
+  // Pick the language
+  if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
+  else lang = "ENGLISH";
+
+  // Load translation file
+  if (lang == "RUSSIAN") translation = requireUncached('../translationsRussian.json');
+  else translation = requireUncached('../translationsEnglish.json');
+
+
   args = args[0];     // Cut off args from different parts of program
 
   let queue;
@@ -10,7 +21,7 @@ module.exports = (msg, args) => {
   else queue = [];
   switch(args[0]) {
     case undefined:
-      getAsyncContent("./txt/playlistInfo.txt")
+      getAsyncContent(language == "ENGLISH" ? "./txt/playlistInfoEnglish.txt" : "./txt/playlistInfoRussian.txt")
       .then(content => {
         msg.reply(content);
       })

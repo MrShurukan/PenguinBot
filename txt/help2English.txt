@@ -1,0 +1,19 @@
+```
+!playlist -> Maybe I should listen to that again?
+  * Full control over the queue
+    !playlist show
+      * Shows what's in the queue now
+    !playlist jump *number*
+      * Turn on a video number *number* in a playlist
+        ** jump leaves the order in playlist same (!play will shift stuff around)
+    !playlist replay   OR   !replay
+      * Stops the playback of current video and starts it over
+    !playlist delete *number*
+      * Deletes the #*number* video from playlist
+    !playlist clear
+      * Clears the playlist
+    !playlist next   OR   !next     !!!NOT WORKING NOW
+      * Switches to the next video in playlist if possible
+    !playlist prev   OR   !prev     !!!NOT WORKING NOW
+      * Switches to the previous video in playlist if possible
+```

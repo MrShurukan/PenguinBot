@@ -2,16 +2,24 @@ const search = require('youtube-search');
 const fs = require('fs');
 const Discord = require('discord.js')
 
-//Load translation file
-const translation = require('../translations.json');
-
 const searchArgs = {
   maxResults: 4,
   key: fs.readFileSync('GKEY.TXT', 'utf8').trim()
 }
 
+let lang, translation;
+
 module.exports = (msg, args) => {
   return new Promise((resolve, reject) => {
+    // Pick the language
+    if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
+    else lang = "ENGLISH";
+
+    // Load translation file
+    if (lang == "RUSSIAN") translation = requireUncached('../translationsRussian.json');
+    else translation = requireUncached('../translationsEnglish.json');
+
+
     let searchPhrase = args[0].join(" ");
     let firstVideo = args[1];
     // Firstly find a link
@@ -92,4 +100,9 @@ function shorten(str) {
   if (str.length > size)
     str = str.substring(0, size) + "...";
   return str;
+}
+
+function requireUncached(module) {
+    delete require.cache[require.resolve(module)]
+    return require(module)
 }
