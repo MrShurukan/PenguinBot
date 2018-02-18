@@ -15,14 +15,14 @@ module.exports = (msg, args) => {
     let searchPhrase = args[0].join(" ");
     let firstVideo = args[1];
     // Firstly find a link
-    msg.reply(translation.startingSearch);
+    if (args[2] != "silent") msg.reply(translation.startingSearch);
     searchVideo(searchPhrase)
     .then((results) => {
-      msg.reply(translation.gotResults);
+      if (args[2] != "silent") msg.reply(translation.gotResults);
       // console.log(results);
       let videos = results.filter(x => x.kind == "youtube#video");
       if (firstVideo === true) {
-        resolve(videos[0].link);
+        resolve([videos[0].link, videos[0].title]);
         return;
       }
 
@@ -34,7 +34,7 @@ module.exports = (msg, args) => {
           .setTitle(channel.title)
           .setColor(11013390)
           .setURL(channel.link)
-          .setDescription(channel.description)
+          .addField(translation.description, shorten(channel.description))
           .setThumbnail(channel.thumbnails.high.url)
         );
       }
@@ -44,20 +44,26 @@ module.exports = (msg, args) => {
           .setTitle(playlist.title)
           .setColor(895085)
           .setURL(playlist.link)
-          .setDescription(playlist.description)
+          .addField(translation.description, shorten(playlist.description))
           .setThumbnail(playlist.thumbnails.high.url)
         );
       }
+      let quickAccessN = 1;
+      let quickAccess = {};
       for (let video of videos) {
         msg.channel.send(
           new Discord.RichEmbed()
           .setTitle(video.title)
           .setColor(881320)
           .setURL(video.link)
-          .setDescription(video.description)
+          .addField(translation.description, shorten(video.description))
           .setThumbnail(video.thumbnails.high.url)
+          .addField(translation.quickAccess, "```" + insTr(translation.quickAccessN, 'N', quickAccessN) + "```")
         );
+        quickAccess[`@${quickAccessN}`] = {link: video.link, title: video.title};
+        quickAccessN++;
       }
+      fs.writeFileSync('./json/QUICKACCESS.JSON', JSON.stringify(quickAccess), 'utf8');
       // console.log(JSON.stringify(playlists, null, 2));
     })
     .catch(err => {
@@ -74,4 +80,16 @@ function searchVideo(title) {
       resolve(results);
     });
   });
+}
+
+//insertTranslation
+function insTr(translation, title, content) {
+	return translation.replace(new RegExp(`{${title}}`, "g"), content)
+}
+
+function shorten(str) {
+  let size = 100;
+  if (str.length > size)
+    str = str.substring(0, size) + "...";
+  return str;
 }

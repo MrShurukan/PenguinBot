@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bufferutil": "^3.0.3",
+    "child-process-promise": "^2.2.1",
     "discord.js": "^11.3.0",
     "erlpack": "github:discordapp/erlpack",
     "libsodium-wrappers": "^0.5.4",
