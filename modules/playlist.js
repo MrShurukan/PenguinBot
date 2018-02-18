@@ -37,8 +37,8 @@ module.exports = (msg, args) => {
         message = new Discord.RichEmbed().setTitle(translation.queue);
         for (i in queue)
           message.addField(`#${~~i + 1}`,
-          `${insTr(translation.playlistN, "N", ~~i + 1)}\n***${queue[i].title};***\n${queue[i].link}${queue[i].currentlyPlaying ? translation.currentlyPlaying : ""}`);
-        }
+          `***${queue[i].title};***${insTr(translation.playlistN, "N", ~~i + 1)}\n${queue[i].link}${queue[i].currentlyPlaying ? translation.currentlyPlaying : ""}\n`);
+      }
       msg.reply(typeof message === "string" ? message : {embed: message});
       // console.log(message);
       break;

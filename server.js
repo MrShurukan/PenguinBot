@@ -1,4 +1,4 @@
-const V = "1.1.1";
+const V = "1.1.2";
 
 const Discord = require("discord.js");
 const fs = require("fs");
