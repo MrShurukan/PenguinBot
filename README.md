@@ -1,6 +1,7 @@
 # Penguin Bot
 
 *Русскоязычные пользователи могут прочесть эту же инструкцию на русском [здесь](https://github.com/MrShurukan/PenguinBot/blob/master/RUSREADME.md)*
+
 Please ignore the text above if you are not connected to Mother Russia
 
 This is a project of a Discord Bot, that is able to do a lot of different stuff. Like, literally A LOT, because of it's ability to accept JS files on fly (It's really easy to code and debug)
@@ -49,11 +50,13 @@ Alright, let's assume you already created a Discord Bot and read everything in [
 
 #### Step 1:
 Choose a folder where you want to save a repo, go there and type following in your console:
+
 ```
 git clone https://github.com/MrShurukan/PenguinBot
 cd PenguinBot
 npm install
 ```
+
 This will download the project and install all dependencies for it (well, obviously you need to install *git* and *node* beforehand)
 
 #### Step 2:
@@ -63,7 +66,9 @@ Now you need to create various files, that are listed in [*Attention!*](https://
 ???????
 #### Step 4:
 `node server.js`
+
 ~~Profit!~~
+
 Congratulations! You've just set up a Great Penguin Bot! Add it to your Discord Server and you are ready to go!
 
 
@@ -83,4 +88,5 @@ You will also be listed down below!
 * Hat tip to anyone who's using this code
 
 > Thanks, and have fun!
+
 \- Gabe Newell
