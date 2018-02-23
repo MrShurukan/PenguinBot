@@ -3,11 +3,14 @@ So, boiz, need some help from Penguin?
 
 Here, keep the change:
 
-Normal commands:
+General commands:
 	!help -> U stoopid
 		* Lists all commands
 		* I don't think that this information was too helpful, since you already typed !help
 			** Did you know that cats can't see directly under their noses? Yes, that's helpful, I know
+
+	!pic *search phrase* -> Damn, how does a Yeti look like?!
+		* Gives first image on Google Images using your search phrase
 
 AudioPlayer and YouTube:
 	!play *link or search phrase* -> Ahhh, stop emitting sounds!

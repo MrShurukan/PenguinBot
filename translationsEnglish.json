@@ -29,5 +29,9 @@
   "addedToQueue": "Added to queue!",
   "queueWasCleared": "Queue is cleared!",
   "wasDeletedFromQueue": "Deleted from queue!",
-  "connectedPlaying": "Conneted! Playing: {LINK}"
+  "connectedPlaying": "Conneted! Playing: {LINK}",
+  "loggedInAs": "Logged in as {TAG}!",
+  "version": "Version",
+  "nothingWasFound": "Nothing was found!",
+  "noDescription": "Description is missing"
 }

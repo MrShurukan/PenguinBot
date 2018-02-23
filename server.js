@@ -1,4 +1,4 @@
-const V = "1.1.2";
+const V = "1.2.0";
 
 const Discord = require("discord.js");
 const fs = require("fs");
@@ -8,12 +8,16 @@ let lang;
 let translation;
 
 client.on('ready', () => {
-	console.log(`Залогинен как ${client.user.tag}!\nВерсия ${V}`);
+	// Pick the language
+	if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
+	else lang = "ENGLISH";
 
-	/*
-	// Clear AudioPlayer files
-	if (fs.existsSync('json/PLAYLIST.JSON')) fs.unlinkSync('json/PLAYLIST.JSON');
-	if (fs.existsSync('json/QUICKACCESS.JSON')) fs.unlinkSync('json/QUICKACCESS.JSON');*/
+	// Load translation file
+	if (lang == "RUSSIAN") translation = requireUncached('./translationsRussian.json');
+	else translation = requireUncached('./translationsEnglish.json');
+
+	// Greet in console
+	console.log(`${insTr(translation.loggedInAs, "TAG", client.user.tag)}\n${translation.version} ${V}`);
 });
 
 const prefix = "!";

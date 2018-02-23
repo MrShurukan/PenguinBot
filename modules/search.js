@@ -26,11 +26,15 @@ module.exports = (msg, args) => {
     if (args[2] != "silent") msg.reply(translation.startingSearch);
     searchVideo(searchPhrase)
     .then((results) => {
-      if (args[2] != "silent") msg.reply(translation.gotResults);
-      // console.log(results);
+      if (args[2] != "silent" && results.length != 0) msg.reply(translation.gotResults);
+      if (results.length == 0) {
+        msg.reply(translation.nothingWasFound);
+        return;
+      }
       let videos = results.filter(x => x.kind == "youtube#video");
       if (firstVideo === true) {
-        resolve([videos[0].link, videos[0].title]);
+        if (videos.length == 0) reject(translation.nothingWasFound);
+        else resolve([videos[0].link, videos[0].title]);
         return;
       }
 
@@ -42,7 +46,7 @@ module.exports = (msg, args) => {
           .setTitle(channel.title)
           .setColor(11013390)
           .setURL(channel.link)
-          .addField(translation.description, shorten(channel.description))
+          .addField(translation.description, modDescription(channel.description))
           .setThumbnail(channel.thumbnails.high.url)
         );
       }
@@ -52,7 +56,7 @@ module.exports = (msg, args) => {
           .setTitle(playlist.title)
           .setColor(895085)
           .setURL(playlist.link)
-          .addField(translation.description, shorten(playlist.description))
+          .addField(translation.description, modDescription(playlist.description))
           .setThumbnail(playlist.thumbnails.high.url)
         );
       }
@@ -64,7 +68,7 @@ module.exports = (msg, args) => {
           .setTitle(video.title)
           .setColor(881320)
           .setURL(video.link)
-          .addField(translation.description, shorten(video.description))
+          .addField(translation.description, modDescription(video.description))
           .setThumbnail(video.thumbnails.high.url)
           .addField(translation.quickAccess, "```" + insTr(translation.quickAccessN, 'N', quickAccessN) + "```")
         );
@@ -95,7 +99,9 @@ function insTr(translation, title, content) {
 	return translation.replace(new RegExp(`{${title}}`, "g"), content)
 }
 
-function shorten(str) {
+function modDescription(str) {
+  if (str.length == 0) return translation.noDescription;
+
   let size = 100;
   if (str.length > size)
     str = str.substring(0, size) + "...";

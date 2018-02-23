@@ -99,6 +99,9 @@ function startVideo(link, msg, title, appArgs) {
                 msg.reply(translation.somethingWentWrong, `\n${e}`);
                 msg.member.voiceChannel.leave();
               }
+            }).catch(e => {
+              msg.reply(translation.somethingWentWrong, `\n${e}`);
+              msg.member.voiceChannel.leave();
             });
         } else
           msg.reply(translation.youMustBeInGroup);

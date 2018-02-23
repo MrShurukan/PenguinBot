@@ -7,5 +7,6 @@
 	"playlist": "__execute modules/playlist.js",
 	"next": "__alias playlist next",
 	"prev": "__alias playlist prev",
-	"replay": "__alias playlist replay"
+	"replay": "__alias playlist replay",
+	"pic": "__execute modules/imageSearch.js"
 }

@@ -29,5 +29,9 @@
   "addedToQueue": "Добавлено в очередь!",
   "queueWasCleared": "Очередь очищена!",
   "wasDeletedFromQueue": "Удалено из очереди!",
-  "connectedPlaying": "Подключен! Проигрываю: {LINK}"
+  "connectedPlaying": "Подключен! Проигрываю: {LINK}",
+  "loggedInAs": "Залогинен как {TAG}!",
+  "version": "Версия",
+  "nothingWasFound": "Ничего не было найдено!",
+  "noDescription": "Описание отсутствует"
 }
