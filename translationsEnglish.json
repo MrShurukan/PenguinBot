@@ -33,5 +33,6 @@
   "loggedInAs": "Logged in as {TAG}!",
   "version": "Version",
   "nothingWasFound": "Nothing was found!",
-  "noDescription": "Description is missing"
+  "noDescription": "Description is missing",
+  "stopped": "Stopped"
 }

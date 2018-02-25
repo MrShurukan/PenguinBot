@@ -33,5 +33,6 @@
   "loggedInAs": "Залогинен как {TAG}!",
   "version": "Версия",
   "nothingWasFound": "Ничего не было найдено!",
-  "noDescription": "Описание отсутствует"
+  "noDescription": "Описание отсутствует",
+  "stopped": "Остановлено"
 }
