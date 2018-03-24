@@ -2,18 +2,9 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const play = requireUncached("./play.js");
 
-let lang, translation;
+const translation = require('./translation.js');
 
 module.exports = (msg, args) => {
-  // Pick the language
-  if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
-  else lang = "ENGLISH";
-
-  // Load translation file
-  if (lang == "RUSSIAN") translation = requireUncached('../translationsRussian.json');
-  else translation = requireUncached('../translationsEnglish.json');
-
-
   args = args[0];     // Cut off args from different parts of program
 
   let queue;
@@ -27,17 +18,17 @@ module.exports = (msg, args) => {
       })
       .catch(err => {
         console.warn("Возникла ошибка:\n", err, "\n");
-        msg.reply(translation.errorOccurred + "\n```" + err + "```\n");
+        msg.reply(translation('errorOccurred') + "\n```" + err + "```\n");
       });
       break;
     case "show":
       let message;
-      if (queue.length == 0) message = `\`${translation.queueIsEmpty}\``;
+      if (queue.length == 0) message = `\`${translation('queueIsEmpty')}\``;
       else {
-        message = new Discord.RichEmbed().setTitle(translation.queue);
-        for (i in queue)
+        message = new Discord.RichEmbed().setTitle(translation('queue'));
+        for (let i = queue.length - 25 < 0 ? 0 : queue.length - 25; i < queue.length; i++)
           message.addField(`#${~~i + 1}`,
-          `***${queue[i].title};***${insTr(translation.playlistN, "N", ~~i + 1)}\n${queue[i].link}${queue[i].currentlyPlaying ? translation.currentlyPlaying : ""}\n`);
+          `***${queue[i].title};***${translation('playlistN', "N", ~~i + 1)}\n${queue[i].link}${queue[i].currentlyPlaying ? translation('currentlyPlaying') : ""}\n`);
       }
       msg.reply(typeof message === "string" ? message : {embed: message});
       // console.log(message);
@@ -51,20 +42,20 @@ module.exports = (msg, args) => {
       if (video)
         play(msg, [[video.link], 'playlist']);
       else
-        msg.reply(translation.noCurrentVideo);
+        msg.reply(translation(noCurrentVideo));
       break;
     case "clear":
       queue = [];
       fs.writeFileSync('./json/PLAYLIST.JSON', JSON.stringify(queue), 'utf8');
-      msg.reply(translation.queueWasCleared);
+      msg.reply(translation('queueWasCleared'));
       break;
     case "delete":
       queue.splice(args[1] - 1, 1);
-      msg.reply(translation.wasDeletedFromQueue);
+      msg.reply(translation('wasDeletedFromQueue'));
       break;
 
     default:
-      msg.reply(insTr(translation.noSuchCommand, "COMMAND", `!playlist ${args[0]}`))
+      msg.reply(translation('noSuchCommand', "COMMAND", `!playlist ${args[0]}`));
       break;
   }
 }
@@ -76,11 +67,6 @@ function getAsyncContent(path) {
 			resolve(data);
 		});
 	});
-}
-
-//insertTranslation
-function insTr(translation, title, content) {
-	return translation.replace(new RegExp(`{${title}}`, "g"), content)
 }
 
 function requireUncached(module) {

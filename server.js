@@ -1,39 +1,25 @@
-const V = "1.2.1";
+const V = "1.3.0";
 
 const Discord = require("discord.js");
 const fs = require("fs");
 const client = new Discord.Client();
 
-let lang;
-let translation;
+const translation = require('./commands/translation.js');
+
+if (!fs.existsSync("TOKEN.TXT"))
+	throw new Error(translation("noDiscordToken"));
 
 client.on('ready', () => {
-	// Pick the language
-	if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
-	else lang = "ENGLISH";
-
-	// Load translation file
-	if (lang == "RUSSIAN") translation = requireUncached('./translationsRussian.json');
-	else translation = requireUncached('./translationsEnglish.json');
-
 	// Greet in console
-	console.log(`${insTr(translation.loggedInAs, "TAG", client.user.tag)}\n${translation.version} ${V}`);
+	console.log(translation('loggedInAs', 'TAG', `${client.user.tag}\n${translation('version')} ${V}`));
 });
 
-const prefix = "!";
+const prefix = fs.existsSync('PREFIX.TXT') ? fs.readFileSync('PREFIX.TXT', 'utf-8').trim() : "!";
 const kernelPrefix = "__";
 client.on('message', msg => {
 	// We need to ignore a message, if it's coming from a bot
 	if (msg.author.bot) return;
 	let content = msg.content;
-
-	// Pick the language
-	if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
-	else lang = "ENGLISH";
-
-	// Load translation file
-	if (lang == "RUSSIAN") translation = requireUncached('./translationsRussian.json');
-	else translation = requireUncached('./translationsEnglish.json');
 
 	// Command to us
 	if (content.startsWith(prefix)) {
@@ -41,7 +27,7 @@ client.on('message', msg => {
 		getAsyncContent("json/commands.json").then(commands => {
 			commands = JSON.parse(commands);
 			if (commands[command[0]] === undefined) {
-				msg.reply(insTr(translation.noSuchCommand, 'COMMAND', `${prefix}${command[0]}`));
+				msg.reply(translation('noSuchCommand', 'COMMAND', `${prefix}${command[0]}`));
 				if (msg.guild)
 					msg.react(msg.guild.emojis.find(x => x.name == "hmm").id);
 			}
@@ -50,7 +36,7 @@ client.on('message', msg => {
 			}
 		}).catch(err => {
       console.warn("Возникла ошибка:\n", err, "\n");
-      msg.reply(translation.errorOccurred + "\n```" + err + "```\n", translation.errorEmbed);
+      msg.reply(translation('errorOccurred') + "\n```" + err + "```\n", translation(errorEmbed));
     });
 
 
@@ -62,7 +48,7 @@ client.on('guildMemberAdd', member => {
 	const channel = member.guild.channels.find('name', 'member-log');
 	// Do nothing if the channel wasn't found on this server
 	if (!channel) return;
-	channel.send(insTr(translation.newMemberJoined, "NAME", member));
+	channel.send(translation('newMemberJoined', "NAME", member));
 });
 
 client.login(fs.readFileSync("TOKEN.TXT", "utf8").trim());
@@ -80,11 +66,6 @@ function getAsyncContent(path) {
 function requireUncached(module) {
     delete require.cache[require.resolve(module)]
     return require(module)
-}
-
-//insertTranslation
-function insTr(translation, title, content) {
-	return translation.replace(new RegExp(`{${title}}`, "g"), content)
 }
 
 function analizeCommand(command, msg, commands) {

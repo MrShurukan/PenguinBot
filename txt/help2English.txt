@@ -1,19 +1,25 @@
 ```
-!playlist -> Maybe I should listen to that again?
+$playlist -> Maybe I should listen to that again?
   * Full control over the queue
-    !playlist show
+    $playlist show
       * Shows what's in the queue now
-    !playlist jump *number*
+    $playlist jump *number*
       * Turn on a video number *number* in a playlist
-        ** jump leaves the order in playlist same (!play will shift stuff around)
-    !playlist replay   OR   !replay
+        ** jump leaves the order in playlist same ($play will shift stuff around)
+    $playlist replay   OR   $replay
       * Stops the playback of current video and starts it over
-    !playlist delete *number*
+    $playlist delete *number*
       * Deletes the #*number* video from playlist
-    !playlist clear
+    $playlist clear
       * Clears the playlist
-    !playlist next   OR   !next     !!!NOT WORKING NOW
+    $playlist next   OR   $next     !!!NOT WORKING NOW
       * Switches to the next video in playlist if possible
-    !playlist prev   OR   !prev     !!!NOT WORKING NOW
+    $playlist prev   OR   $prev     !!!NOT WORKING NOW
       * Switches to the previous video in playlist if possible
+
+Lyrics:
+$lyrics -> God, what are they singing about?
+  * Gets song lyrics
+    $lyrics *AUTHOR* - *TRACK NAME*
+      * Between author, dash and name you must put a space
 ```
