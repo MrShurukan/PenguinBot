@@ -10,14 +10,17 @@
   "license": "ISC",
   "dependencies": {
     "bufferutil": "^3.0.3",
+    "cheerio": "^1.0.0-rc.2",
     "child-process-promise": "^2.2.1",
     "discord.js": "^11.3.0",
     "erlpack": "github:discordapp/erlpack",
     "google-images": "^2.1.0",
     "libsodium-wrappers": "^0.5.4",
     "lodash": "^4.17.5",
+    "node-fetch": "^2.0.0",
     "node-opus": "^0.2.7",
     "opusscript": "0.0.6",
+    "request": "^2.83.0",
     "uws": "^9.14.0",
     "youtube-search": "^1.0.10"
   },

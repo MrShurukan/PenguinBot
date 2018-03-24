@@ -1,15 +1,9 @@
 const fs = require("fs");
+const translation = require('./translation.js');
+
 module.exports = (msg) => {
-
-  // Pick the language
-  if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
-  else lang = "ENGLISH";
-
-  // Load translation file
-  if (lang == "RUSSIAN") translation = requireUncached('../translationsRussian.json');
-  else translation = requireUncached('../translationsEnglish.json');
-
-  msg.reply(translation.stopped);
+  
+  msg.reply(translation('stopped'));
   if (msg.member.voiceChannel !== undefined) msg.member.voiceChannel.leave();
   else return;
   if (fs.existsSync("./json/PLAYLIST.JSON")) {

@@ -18,7 +18,7 @@
   "youMustBeInGroup": "You must be in a group and in a voice chat to play something",
   "description": "Description:",
   "quickAccess": "Quick Access",
-  "quickAccessN": "Use !play @{N} to quickly play this video",
+  "quickAccessN": "Use !play ^{N} to quickly play this video",
   "somethingWentWrong": "Something went wrong...",
   "quickAccessDoesntExist": "Quick Access wasn't created yet; Use !search for that",
   "queue": "Playlist",
@@ -34,5 +34,13 @@
   "version": "Version",
   "nothingWasFound": "Nothing was found!",
   "noDescription": "Description is missing",
-  "stopped": "Stopped"
+  "stopped": "Stopped",
+  "noMusixToken": "No Musix Token! Add it to MUSIXTOKEN.TXT in root.\n\nVisit https://github.com/MrShurukan/PenguinBot for additional info",
+  "loadingLyrics": "Loading lyrics...",
+  "noDiscordToken": "Discord token is missing! It's essential for any work at all, please put TOKEN from your Discord bot in TOKEN.TXT file in root (create one)\n\nVisit https://github.com/MrShurukan/PenguinBot for additional info",
+  "noCSE_data": "Attention! To use this command you need to additionaly set up bot and insert data about your Google Custom Search Engine (API key и CSE) in API.TXT and CSE.TXT to root folder.\n\nVisit https://github.com/MrShurukan/PenguinBot for additional info",
+  "noGKEY": "Attention! To use this command you need to additionaly set up bot and insert your Google Key in file GKEY.TXT to root folder.\n\nVisit https://github.com/MrShurukan/PenguinBot for additional info",
+  "backwardsSearchAttempt": "Trying to search backwards...",
+  "searchingFor": "Searching for {NAME}",
+  "lyrics": "Lyrics"
 }

@@ -1,39 +1,36 @@
 const search = require('youtube-search');
 const fs = require('fs');
-const Discord = require('discord.js')
+const Discord = require('discord.js');
+const qALiteral = "^";
+
+const translation = require('./translation.js');
+
+const KEY = fs.existsSync('GKEY.TXT') ? fs.readFileSync('GKEY.TXT', 'utf8').trim() : null;
 
 const searchArgs = {
   maxResults: 4,
-  key: fs.readFileSync('GKEY.TXT', 'utf8').trim()
+  key: KEY
 }
-
-let lang, translation;
 
 module.exports = (msg, args) => {
   return new Promise((resolve, reject) => {
-    // Pick the language
-    if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
-    else lang = "ENGLISH";
 
-    // Load translation file
-    if (lang == "RUSSIAN") translation = requireUncached('../translationsRussian.json');
-    else translation = requireUncached('../translationsEnglish.json');
-
+    if (!KEY) reject(translation('noGKEY'));
 
     let searchPhrase = args[0].join(" ");
     let firstVideo = args[1];
     // Firstly find a link
-    if (args[2] != "silent") msg.reply(translation.startingSearch);
+    if (args[2] != "silent") msg.reply(translation('startingSearch'));
     searchVideo(searchPhrase)
     .then((results) => {
-      if (args[2] != "silent" && results.length != 0) msg.reply(translation.gotResults);
+      if (args[2] != "silent" && results.length != 0) msg.reply(translation('gotResults'));
       if (results.length == 0) {
-        msg.reply(translation.nothingWasFound);
+        msg.reply(translation('nothingWasFound'));
         return;
       }
       let videos = results.filter(x => x.kind == "youtube#video");
       if (firstVideo === true) {
-        if (videos.length == 0) reject(translation.nothingWasFound);
+        if (videos.length == 0) reject(translation('nothingWasFound'));
         else resolve([videos[0].link, videos[0].title]);
         return;
       }
@@ -46,7 +43,7 @@ module.exports = (msg, args) => {
           .setTitle(channel.title)
           .setColor(11013390)
           .setURL(channel.link)
-          .addField(translation.description, modDescription(channel.description))
+          .addField(translation('description'), modDescription(channel.description))
           .setThumbnail(channel.thumbnails.high.url)
         );
       }
@@ -56,7 +53,7 @@ module.exports = (msg, args) => {
           .setTitle(playlist.title)
           .setColor(895085)
           .setURL(playlist.link)
-          .addField(translation.description, modDescription(playlist.description))
+          .addField(translation('description'), modDescription(playlist.description))
           .setThumbnail(playlist.thumbnails.high.url)
         );
       }
@@ -68,11 +65,11 @@ module.exports = (msg, args) => {
           .setTitle(video.title)
           .setColor(881320)
           .setURL(video.link)
-          .addField(translation.description, modDescription(video.description))
+          .addField(translation('description'), modDescription(video.description))
           .setThumbnail(video.thumbnails.high.url)
-          .addField(translation.quickAccess, "```" + insTr(translation.quickAccessN, 'N', quickAccessN) + "```")
+          .addField(translation('quickAccess'), "```" + (translation('quickAccessN', 'N', quickAccessN)) + "```")
         );
-        quickAccess[`@${quickAccessN}`] = {link: video.link, title: video.title};
+        quickAccess[`${qALiteral}${quickAccessN}`] = {link: video.link, title: video.title};
         quickAccessN++;
       }
       fs.writeFileSync('./json/QUICKACCESS.JSON', JSON.stringify(quickAccess), 'utf8');
@@ -80,7 +77,7 @@ module.exports = (msg, args) => {
     })
     .catch(err => {
       console.warn("Возникла ошибка:\n", err, "\n");
-      msg.reply(translation.errorOccurred + "\n```" + err + "```\n", translation.errorEmbed);
+      msg.reply(translation('errorOccurred') + "\n```" + err + "```\n", translation('errorEmbed'));
     });
   });
 }
@@ -94,13 +91,8 @@ function searchVideo(title) {
   });
 }
 
-//insertTranslation
-function insTr(translation, title, content) {
-	return translation.replace(new RegExp(`{${title}}`, "g"), content)
-}
-
 function modDescription(str) {
-  if (str.length == 0) return translation.noDescription;
+  if (str.length == 0) return translation('noDescription');
 
   let size = 100;
   if (str.length > size)

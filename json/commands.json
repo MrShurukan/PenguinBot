@@ -1,12 +1,13 @@
 {
-	"help": "__execute modules/helpSender.js",
-	"play": "__execute modules/play.js",
-	"search": "__execute modules/search.js",
-	"error": "__execute modules/errorMaker.js",
-	"stop": "__execute modules/stop.js",
-	"playlist": "__execute modules/playlist.js",
+	"help": "__execute commands/helpSender.js",
+	"play": "__execute commands/play.js",
+	"search": "__execute commands/search.js",
+	"error": "__execute commands/errorMaker.js",
+	"stop": "__execute commands/stop.js",
+	"playlist": "__execute commands/playlist.js",
 	"next": "__alias playlist next",
 	"prev": "__alias playlist prev",
 	"replay": "__alias playlist replay",
-	"pic": "__execute modules/imageSearch.js"
+	"pic": "__execute commands/imageSearch.js",
+	"lyrics": "__execute commands/lyricsStealer.js"
 }

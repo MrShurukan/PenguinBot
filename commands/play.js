@@ -1,30 +1,22 @@
 const search = require('youtube-search');
 const fs = require('fs');
 const exec = require('child-process-promise').exec;
-let lang;
-let translation;
+const qALiteral = "^";
+// const ytdl = require('youtube-dl');
+
+const translation = require('./translation.js');
 
 module.exports = (msg, args) => {
   // Voice only works in guilds
   if (!msg.guild) {
-    msg.reply(translation.youMustBeInGroup);
+    msg.reply(translation('youMustBeInGroup'));
     return;
   }
 
-  // Pick the language
-  if (fs.existsSync('LANG.TXT')) lang = fs.readFileSync('LANG.TXT', 'utf8').trim();
-  else lang = "ENGLISH";
-
-  // Load translation file
-  if (lang == "RUSSIAN") translation = requireUncached('../translationsRussian.json');
-  else translation = requireUncached('../translationsEnglish.json');
-
-
-  //args = args[0];   //We don't need any additional args, so we just cut them (We need only words)
   let appArgs = args.slice(1);
   args = args[0];
 
-  let quickAccess = args[0].startsWith("@") ? args[0] : null;
+  let quickAccess = args[0].startsWith(qALiteral) ? args[0] : null;
   let searchPhrase = quickAccess ? null : args.join(" ");
   let link, title;
 
@@ -35,7 +27,7 @@ module.exports = (msg, args) => {
       title = qA[quickAccess].title;
     }
     else {
-      msg.reply(translation.somethingWentWrong + " " + translation.quickAccessDoesntExist);
+      msg.reply(translation('somethingWentWrong') + " " + translation('quickAccessDoesntExist'));
       return;
     }
   }
@@ -49,7 +41,7 @@ module.exports = (msg, args) => {
       }
     ).catch(err => {
       console.warn("Возникла ошибка:\n", err, "\n");
-      msg.reply(translation.errorOccurred + "\n```" + err + "```\n", translation.errorEmbed);
+      msg.reply(translation('errorOccurred') + "\n```" + err + "```\n", translation('errorEmbed'));
     });
   }
   else startVideo(link, msg, title, appArgs);
@@ -61,7 +53,7 @@ function startVideo(link, msg, title, appArgs) {
   // Executing youtube-dl
   let queue = [];
   if (fs.existsSync('./json/PLAYLIST.JSON')) queue = JSON.parse(fs.readFileSync('./json/PLAYLIST.JSON', 'utf8'));
-  // console.log("Parsed queue:", queue);
+  
   exec(`youtube-dl -g -x ${link}`)
     .then(result => {
         let resultLink = result.stdout.trim();
@@ -83,7 +75,7 @@ function startVideo(link, msg, title, appArgs) {
               justAdded = true;
               setTimeout(() => {justAdded = false}, 5000);
               fs.writeFileSync('./json/PLAYLIST.JSON', JSON.stringify(queue), 'utf8');
-              if (appArgs[1] != "silent") msg.reply(insTr(translation.connectedPlaying, "LINK", link));
+              if (appArgs[1] != "silent") msg.reply(translation('connectedPlaying', "LINK", link));
               try {
                 connection.playArbitraryInput(resultLink).on('end', () => {
                   // console.log("I ended");
@@ -96,18 +88,18 @@ function startVideo(link, msg, title, appArgs) {
                 });
               }
               catch (e) {
-                msg.reply(translation.somethingWentWrong, `\n${e}`);
+                msg.reply(translation('somethingWentWrong') + `\n${e}`);
                 msg.member.voiceChannel.leave();
               }
             }).catch(e => {
-              msg.reply(translation.somethingWentWrong, `\n${e}`);
+              msg.reply(translation('somethingWentWrong') + `\n${e}`);
               msg.member.voiceChannel.leave();
             });
         } else
-          msg.reply(translation.youMustBeInGroup);
+          msg.reply(translation('youMustBeInGroup'));
     }).catch(err => {
       console.warn("Возникла ошибка:\n", err, "\n");
-      msg.reply(translation.errorOccurred + "\n```" + err + "```\n");
+      msg.reply(translation('errorOccurred') + "\n```" + err + "```\n");
       msg.member.voiceChannel.leave();
     });
 }
@@ -115,9 +107,4 @@ function startVideo(link, msg, title, appArgs) {
 function requireUncached(module) {
     delete require.cache[require.resolve(module)]
     return require(module)
-}
-
-//insertTranslation
-function insTr(translation, title, content) {
-	return translation.replace(new RegExp(`{${title}}`, "g"), content)
 }

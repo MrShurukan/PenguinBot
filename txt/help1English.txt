@@ -4,26 +4,26 @@ So, boiz, need some help from Penguin?
 Here, keep the change:
 
 General commands:
-	!help -> U stoopid
+	$help -> U stoopid
 		* Lists all commands
-		* I don't think that this information was too helpful, since you already typed !help
+		* I don't think that this information was too helpful, since you already typed $help
 			** Did you know that cats can't see directly under their noses? Yes, that's helpful, I know
 
-	!pic *search phrase* -> Damn, how does a Yeti look like?!
+	$pic *search phrase* -> Damn, how does a Yeti look like?!
 		* Gives first image on Google Images using your search phrase
 
 AudioPlayer and YouTube:
-	!play *link or search phrase* -> Ahhh, stop emitting sounds!
+	$play *link or search phrase* -> Ahhh, stop emitting sounds!
 		* Plays first video that you can get by searching that
-			** If you are not sure that it will find your video, use !search
+			** If you are not sure that it will find your video, use $search
     * You need to be in voice chat
-		* ATTENTION! !play will change playlist order, if the video already was there (it will put in on top)
-			** If you need to "jump" on other video in playlist, use !playlist jump
+		* ATTENTION! $play will change playlist order, if the video already was there (it will put in on top)
+			** If you need to "jump" on other video in playlist, use $playlist jump
 
-	!search *search phrase* -> Did you bloody lose it again?
+	$search *search phrase* -> Did you bloody lose it again?
 		* Gives first 4 search results on YouTube (YouTube channels and playlists are included)
-			** For every video there will be an ability to quickly play it using !play
+			** For every video there will be an ability to quickly play it using $play
 
-	!stop -> Ahh, sweet calm and silence.
+	$stop -> Ahh, sweet calm and silence.
 		* Stops current playing sound/video, if there are any
 ```
