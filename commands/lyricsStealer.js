@@ -11,8 +11,10 @@ let TrackName;
 
 const TOKEN = fs.existsSync('MUSIXTOKEN.TXT') ? fs.readFileSync('MUSIXTOKEN.TXT', 'utf8').trim() : null;
 
-module.exports = (msg, args) => {
-    const alreadyReversed = args[1];
+module.exports = (msg, ARGS) => {
+    const alreadyReversed = ARGS[1];
+    let args = ARGS[0];
+
 
     if (!TOKEN) {
         msg.reply(translation('noMusixToken'));
@@ -40,11 +42,11 @@ module.exports = (msg, args) => {
             if (x.message.body.track_list.length == 0) {
                 msg.reply(translation('nothingWasFound'));
                 // Try searching backwards
-                if (!alreadyReversed) {
+                if (alreadyReversed === undefined) {
                     msg.reply(translation('backwardsSearchAttempt'));
                     requireUncached(`./lyricsStealer`)(msg, [[TrackName, '-', ArtistName], true]);
                 }
-                else return;
+                return;
             }
             url = x.message.body.track_list[0].track.track_share_url;
             request(url, (error, response, html) => {
@@ -69,11 +71,11 @@ module.exports = (msg, args) => {
             });
         }).catch(err => {
             console.warn("Возникла ошибка:\n", err, "\n");
-            msg.reply(translation('errorOccurred') + "\n```" + err + "```\n", translation(errorEmbed));
+            msg.reply(translation('errorOccurred') + "\n```" + err + "```\n", translation('errorEmbed'));
         });
     }).catch(err => {
         console.warn("Возникла ошибка:\n", err, "\n");
-        msg.reply(translation('errorOccurred') + "\n```" + err + "```\n", translation(errorEmbed));
+        msg.reply(translation('errorOccurred') + "\n```" + err + "```\n", translation('errorEmbed'));
     });
 }
 
