@@ -12,7 +12,7 @@ let TrackName;
 const TOKEN = fs.existsSync('MUSIXTOKEN.TXT') ? fs.readFileSync('MUSIXTOKEN.TXT', 'utf8').trim() : null;
 
 module.exports = (msg, args) => {
-    args = args[0]; // Cut off arguments from other parts of program, we don't need them
+    const alreadyReversed = args[1];
 
     if (!TOKEN) {
         msg.reply(translation('noMusixToken'));
@@ -39,11 +39,12 @@ module.exports = (msg, args) => {
             // console.log(JSON.stringify(x, null, " "))
             if (x.message.body.track_list.length == 0) {
                 msg.reply(translation('nothingWasFound'));
-                msg.reply(translation('backwardsSearchAttempt'));
                 // Try searching backwards
-                requireUncached(`./lyricsStealer`)(msg, [[TrackName, '-', ArtistName]]);
-
-                return;
+                if (!alreadyReversed) {
+                    msg.reply(translation('backwardsSearchAttempt'));
+                    requireUncached(`./lyricsStealer`)(msg, [[TrackName, '-', ArtistName], true]);
+                }
+                else return;
             }
             url = x.message.body.track_list[0].track.track_share_url;
             request(url, (error, response, html) => {
