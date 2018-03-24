@@ -32,6 +32,8 @@ module.exports = (msg, args) => {
     }
   }
 
+  if (searchPhrase.startsWith('http')) link = searchPhrase;
+
   if (!link) {
     // Firstly find a link
     const mySearch = requireUncached('./search.js');
@@ -63,6 +65,7 @@ function startVideo(link, msg, title, appArgs) {
             .then(connection => { // Connection is an instance of VoiceConnection
               if (appArgs[0] == "playlist") {
                 queue.forEach(x => {x.currentlyPlaying = false; x.last = false;});
+                console.log(link);
                 let v = queue.find(x => x.link == link);
                 v.currentlyPlaying = true;
                 v.last = true;
@@ -88,10 +91,12 @@ function startVideo(link, msg, title, appArgs) {
                 });
               }
               catch (e) {
+                console.log(1, e);
                 msg.reply(translation('somethingWentWrong') + `\n${e}`);
                 msg.member.voiceChannel.leave();
               }
             }).catch(e => {
+              console.log(2, e);
               msg.reply(translation('somethingWentWrong') + `\n${e}`);
               msg.member.voiceChannel.leave();
             });
