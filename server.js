@@ -9,13 +9,15 @@ const translation = require('./commands/translation.js');
 if (!fs.existsSync("TOKEN.TXT"))
 	throw new Error(translation("noDiscordToken"));
 
+const prefix = fs.existsSync('PREFIX.TXT') ? fs.readFileSync('PREFIX.TXT', 'utf-8').trim() : "!";
+const kernelPrefix = "__";
+
 client.on('ready', () => {
 	// Greet in console
 	console.log(translation('loggedInAs', 'TAG', `${client.user.tag}\n${translation('version')} ${V}`));
+	console.log("Prefix:", prefix);
 });
 
-const prefix = fs.existsSync('PREFIX.TXT') ? fs.readFileSync('PREFIX.TXT', 'utf-8').trim() : "!";
-const kernelPrefix = "__";
 client.on('message', msg => {
 	// We need to ignore a message, if it's coming from a bot
 	if (msg.author.bot) return;
