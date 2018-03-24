@@ -41,5 +41,6 @@
   "noCSE_data": "Внимание! Для использования этой команды необходимо дополнительно настроить бота и вставить данные о Вашем Google Custom Search Engine (API Ключ и CSE) в файлы API.TXT и CSE.TXT в корень.\n\nПосетите https://github.com/MrShurukan/PenguinBot/blob/master/RUSREADME.md для дополнительной информации",
   "noGKEY": "Внимание! Для использования этой команды необходимо дополнительно настроить бота и вставить Ваш Google Key в файл GKEY.TXT в корень.\n\nПосетите https://github.com/MrShurukan/PenguinBot/blob/master/RUSREADME.md для дополнительной информации",
   "backwardsSearchAttempt": "Пробую совершить поиск задом наперед...",
-  "searchingFor": "Ищу {ARTIST} - {TRACKNAME}"
+  "searchingFor": "Ищу {NAME}",
+  "lyrics": "Слова песни"
 }

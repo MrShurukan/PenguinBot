@@ -1,5 +1,5 @@
 const fs = require('fs');
-const prefix = fs.existsSync('PREFIX.TXT') ? fs.readFileSync('PREFIX.TXT', 'utf-8') : "!";
+const prefix = fs.existsSync('PREFIX.TXT') ? fs.readFileSync('PREFIX.TXT', 'utf-8').trim() : "!";
 
 module.exports = (msg) => {
   // Get the language
